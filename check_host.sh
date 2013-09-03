@@ -33,7 +33,7 @@ do
 	if [ 'x$vbds' = 'x' ]
 	then
 		echo Possible problem with VDI $i: No VBD found
-		errorsdetected=$((errorsdetected+1))	
+		errorsdetected=$((errorsdetected+1))
 	fi
 
 	for vbd in $vbds
