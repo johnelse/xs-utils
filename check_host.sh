@@ -16,7 +16,7 @@ do
 	resident=`xe vm-list uuid=$i params=resident-on --minimal`
 	if [ "$me" != "$resident" ]
 	then
-		echo Possible problem detected: check VM $i
+		echo Possible problem detected: VM $i has a domain but is isn\'t marked as resident in xapi
 		errorsdetected=$((errorsdetected + 1))
 	fi
 done
