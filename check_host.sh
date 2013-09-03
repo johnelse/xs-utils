@@ -44,7 +44,7 @@ do
 		then
 			echo Possible problem detected: VDI $i is attached locally but its VM $vm isn\'t resident
 			errorsdetected=$((errorsdetected+1))
-		fi	
+		fi
 	done
 done
 
