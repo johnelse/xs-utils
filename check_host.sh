@@ -14,7 +14,7 @@ for i in $domains
 do
 	echo "checking domain $i"
 	resident=`xe vm-list uuid=$i params=resident-on --minimal`
-	if [ 'x$me' != 'x$resident' ]
+	if [ "$me" != "$resident" ]
 	then
 		echo Possible problem detected: check VM $i
 		errorsdetected=$((errorsdetected + 1))
