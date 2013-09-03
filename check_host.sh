@@ -40,7 +40,7 @@ do
 	do
 		vm=`xe vbd-list uuid=$vbd params=vm-uuid --minimal`
 		resident=`xe vm-list uuid=$vm params=resident-on --minimal`
-		if [ x$me != x$resident ]
+		if [ "$me" != "$resident" ]
 		then
 			echo Possible problem detected: VDI $i is attached locally but its VM $vm isn\'t resident
 			errorsdetected=$((errorsdetected+1))
