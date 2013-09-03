@@ -50,7 +50,7 @@ done
 
 echo $errorsdetected errors detected
 
-if [ $errorsdetected > 0 ]
+if [ $errorsdetected -gt 0 ]
 then
 	exit 1
 fi
