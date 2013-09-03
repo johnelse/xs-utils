@@ -30,7 +30,7 @@ for i in $vdis
 do
 	echo "Checking VDI $i"
 	vbds=`xe vbd-list vdi-uuid=$i currently-attached=true --minimal`
-	if [ 'x$vbds' = 'x' ]
+	if [ "$vbds" = "" ]
 	then
 		echo Possible problem with VDI $i: No VBD found
 		errorsdetected=$((errorsdetected+1))
