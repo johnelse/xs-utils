@@ -10,13 +10,13 @@ domains=`list_domains -minimal`
 
 # Check that each of the names given by list_domains corresponds to the UUID of
 # a VM marked as resident on this host in xapi.
-for i in $domains
+for domain in $domains
 do
-	echo "checking domain $i"
-	resident=`xe vm-list uuid=$i params=resident-on --minimal`
+	echo "checking domain $domain"
+	resident=`xe vm-list uuid=$domain params=resident-on --minimal`
 	if [ "$me" != "$resident" ]
 	then
-		echo Possible problem detected: VM $i has a domain but is isn\'t marked as resident in xapi
+		echo Possible problem detected: VM $domain has a domain but is isn\'t marked as resident in xapi
 		errorsdetected=$((errorsdetected + 1))
 	fi
 done
@@ -26,13 +26,13 @@ vdis=`tap-ctl list | rev | cut -d/ -f1 | rev | grep -o '[0-9a-f][0-9a-f-]\+'`
 
 # Check each of these corresponds to an attached VBD owned by
 # a locally-resident VM.
-for i in $vdis
+for vdi in $vdis
 do
-	echo "Checking VDI $i"
-	vbds=`xe vbd-list vdi-uuid=$i currently-attached=true --minimal`
+	echo "Checking VDI $vdi"
+	vbds=`xe vbd-list vdi-uuid=$vdi currently-attached=true --minimal`
 	if [ "$vbds" = "" ]
 	then
-		echo Possible problem with VDI $i: No VBD found
+		echo Possible problem with VDI $vdi: No VBD found
 		errorsdetected=$((errorsdetected+1))
 	fi
 
