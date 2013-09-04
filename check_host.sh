@@ -29,7 +29,7 @@ vdis=`tap-ctl list | rev | cut -d/ -f1 | rev | grep -o '[0-9a-f][0-9a-f-]\+'`
 for vdi in $vdis
 do
 	echo "Checking VDI $vdi"
-	vbds=`xe vbd-list vdi-uuid=$vdi currently-attached=true --minimal`
+	vbds=`xe vbd-list vdi-uuid=$vdi currently-attached=true --minimal | tr , '\n'`
 	if [ "$vbds" = "" ]
 	then
 		echo Possible problem with VDI $vdi: No VBD found
