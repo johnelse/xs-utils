@@ -24,8 +24,8 @@ done
 # Get VDIs which have a tapdisk running on this host.
 vdis=`tap-ctl list | rev | cut -d/ -f1 | rev | grep -o '[0-9a-f][0-9a-f-]\+'`
 
-# Check each of these corresponds to an attached VBD owned by
-# a locally-resident VM.
+# Check that for each of these tapdisks, there is at least one locally-resident
+# VM with a VBD connecting it to this disk.
 for vdi in $vdis
 do
 	echo "Checking VDI $vdi"
