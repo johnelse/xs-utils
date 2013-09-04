@@ -48,7 +48,7 @@ do
 	done
 	if [ ! $resident_vm_exists ]
 	then
-		echo Possible problem detected: VDI $i is attached locally but its VM $vm isn\'t resident
+		echo Possible problem detected: VDI $i is attached locally, but not to any resident VMs according to xapi
 		errorsdetected=$((errorsdetected+1))
 	fi
 done
