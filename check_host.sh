@@ -36,16 +36,21 @@ do
 		errorsdetected=$((errorsdetected+1))
 	fi
 
+	resident_vm_exists=
 	for vbd in $vbds
 	do
 		vm=`xe vbd-list uuid=$vbd params=vm-uuid --minimal`
 		resident=`xe vm-list uuid=$vm params=resident-on --minimal`
-		if [ "$me" != "$resident" ]
+		if [ "$me" = "$resident" ]
 		then
-			echo Possible problem detected: VDI $i is attached locally but its VM $vm isn\'t resident
-			errorsdetected=$((errorsdetected+1))
+			resident_vm_exists=true
 		fi
 	done
+	if [ ! $resident_vm_exists ]
+	then
+		echo Possible problem detected: VDI $i is attached locally but its VM $vm isn\'t resident
+		errorsdetected=$((errorsdetected+1))
+	fi
 done
 
 echo $errorsdetected errors detected
