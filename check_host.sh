@@ -22,7 +22,8 @@ do
 done
 
 # Get VDIs which have a tapdisk running on this host.
-vdis=`tap-ctl list | rev | cut -d/ -f1 | rev | grep -o '[0-9a-f][0-9a-f-]\+'`
+# "grep -v aio" excludes tapdisks corresponding to ISOs.
+vdis=`tap-ctl list | grep -v aio | rev | cut -d/ -f1 | rev | grep -o '[0-9a-f][0-9a-f-]\+'`
 
 # Check that for each of these tapdisks, there is at least one locally-resident
 # VM with a VBD connecting it to this disk.
