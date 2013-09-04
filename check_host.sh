@@ -30,11 +30,6 @@ for vdi in $vdis
 do
 	echo "Checking VDI $vdi"
 	vbds=`xe vbd-list vdi-uuid=$vdi currently-attached=true --minimal | tr , '\n'`
-	if [ "$vbds" = "" ]
-	then
-		echo Possible problem with VDI $vdi: No VBD found
-		errorsdetected=$((errorsdetected+1))
-	fi
 
 	resident_vm_exists=
 	for vbd in $vbds
