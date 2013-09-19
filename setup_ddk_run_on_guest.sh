@@ -29,9 +29,9 @@ set -x
 # Install packages.
 $YUM_INSTALL vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386
 
+# Setup new disk.
 if ! mountpoint -q $MOUNT_POINT
 then
-    # Setup new disk.
     mkfs.ext3 /dev/xvdc
     mkdir -p $MOUNT_POINT
     mount $INSTALL_DEVICE $MOUNT_POINT
@@ -71,10 +71,10 @@ then
     cp contrib/completion/git-completion.bash /etc/bash_completion.d/git
 fi
 
+# Set up OCaml.
+# This is the initial install needed to build OPAM.
 if [ ! -e $BIN_DIR/ocaml ]
 then
-    # Set up OCaml.
-    # This is the initial install needed to build OPAM.
     cd $SRC_DIR
     rm -rf ocaml-*
     wget http://caml.inria.fr/pub/distrib/ocaml-${OCAML_BOOTSTRAP_SHORT_VERSION}/ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
@@ -84,9 +84,9 @@ then
     make world opt opt.opt install
 fi
 
+# Set up tig.
 if ! which tig 2> /dev/null
 then
-    # Set up tig.
     cd $PULLS_DIR
     rm -rf tig
     git clone git://github.com/jonas/tig
@@ -98,9 +98,9 @@ then
     make install
 fi
 
+# Set up OPAM.
 if ! which opam 2> /dev/null
 then
-    # Set up OPAM.
     ln -sf $OPAM_DIR $HOME/.opam
     cd $PULLS_DIR
     rm -rf opam
