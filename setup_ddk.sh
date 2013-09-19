@@ -57,5 +57,6 @@ else
     make world opt opt.opt
 
     # Set up paths.
-    # echo "export PATH=/usr/local2/bin:$PATH" >> ~/.bashrc
+    # echo >> $HOME/.bashrc
+    # echo 'export PATH=/usr/local2/bin:$PATH' >> $HOME/.bashrc
 fi
