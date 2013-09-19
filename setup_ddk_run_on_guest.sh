@@ -13,6 +13,7 @@ TMUX_VERSION=1.6
 GIT_VERSION=1.8.4
 OCAML_BOOTSTRAP_VERSION=4.00.1
 OCAML_BOOTSTRAP_SHORT_VERSION=`echo $OCAML_BOOTSTRAP_VERSION | cut -d "." -f 1,2`
+TIG_VERSION=1.1
 
 OPAM_VERSION=1.0.0
 OCAML_OPAM_VERSION=4.01.0
@@ -64,6 +65,16 @@ tar zxf ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
 cd ocaml-${OCAML_BOOTSTRAP_VERSION}
 ./configure --prefix $MOUNT_POINT
 make world opt opt.opt install
+
+# Set up tig.
+cd $PULLS_DIR
+git clone git://github.com/jonas/tig
+cd tig
+git checkout tig-${TIG_VERSION}
+# tig-1.1 doesn't support --prefix, and tig-1.2 doesn't build against old libc.
+# This puts tig into /root/bin, which is OK.
+make
+make install
 
 # Set up OPAM.
 PATH=$BIN_DIR:$PATH
