@@ -23,4 +23,4 @@ VM=`xe vm-import filename=${MOUNT_POINT}/ddk/ova.xml sr-uuid=${SR_UUID}`
 xe vm-memory-limits-set uuid=${VM} dynamic-min=2147483648 dynamic-max=2147483648 static-min=2147483648 static-max=2147483648
 xe vm-param-set uuid=${VM} VCPUs-max=4 VCPUs-at-startup=4 name-label=${NAME_LABEL}
 VDI=`xe vdi-create type=user sr-uuid=${SR_UUID} name-label="DDK data VDI" virtual-size=21474836480`
-xe vbd-create vm-uuid=${VM} vdi-uuid=${VDI} device=autodetect type=Disk mode=RW
+xe vbd-create vm-uuid=${VM} vdi-uuid=${VDI} device=2 type=Disk mode=RW
