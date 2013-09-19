@@ -1,7 +1,5 @@
 #!/bin/sh
 
-set -x
-
 YUM_INSTALL="yum install --disablerepo=citrix --enablerepo=base,updates -y"
 
 INSTALL_DEVICE=/dev/xvdc
@@ -23,6 +21,8 @@ then
     echo "$INSTALL_DEVICE does not exist"
     exit 1
 else
+    set -x
+
     # Install packages.
     $YUM_INSTALL vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386
 
