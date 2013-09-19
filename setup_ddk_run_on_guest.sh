@@ -35,7 +35,7 @@ mount $INSTALL_DEVICE $MOUNT_POINT
 grep -q $INSTALL_DEVICE /etc/fstab || echo "$INSTALL_DEVICE	$MOUNT_POINT	ext3	defaults	1  1" >> /etc/fstab
 
 # Set up source directory.
-mkdir -p $SRC_DIR $OPAM_DIR
+mkdir -p $SRC_DIR $PULLS_DIR $OPAM_DIR
 
 # Set up tmux.
 cd $SRC_DIR
