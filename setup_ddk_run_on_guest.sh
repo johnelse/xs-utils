@@ -80,5 +80,6 @@ opam remote add xapi-project git://github.com/xapi-project/opam-repo-dev
 opam switch $OCAML_OPAM_VERSION
 eval `opam config env`
 
-# Set up paths.
+# Set up .bashrc
 grep -q $BIN_DIR $HOME/.bashrc || (echo >> $HOME/.bashrc && echo "export PATH=$BIN_DIR:\$PATH" >> $HOME/.bashrc)
+grep -q "opam config env" $HOME/.bashrc || (echo >> $HOME/.bashrc && echo "which opam > /dev/null && eval \`opam config env\`" >> $HOME/.bashrc)
