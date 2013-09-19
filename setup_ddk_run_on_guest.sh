@@ -56,6 +56,8 @@ cd git-${GIT_VERSION}
 make configure
 ./configure --prefix=$MOUNT_POINT
 make all install
+# Install git bash completion.
+cp contrib/completion/git-completion.bash /etc/bash_completion.d/git
 
 # Set up OCaml.
 # This is the initial install needed to build OPAM.
