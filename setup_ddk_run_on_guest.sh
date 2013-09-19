@@ -38,7 +38,7 @@ then
     grep -q $INSTALL_DEVICE /etc/fstab || echo "$INSTALL_DEVICE	$MOUNT_POINT	ext3	defaults	1  1" >> /etc/fstab
 fi
 
-# Set up source directory.
+# Create directories on the new disk.
 mkdir -p $SRC_DIR $PULLS_DIR $OPAM_DIR $BIN_DIR
 
 PATH=$BIN_DIR:$PATH
