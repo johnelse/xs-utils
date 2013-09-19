@@ -16,6 +16,7 @@ GIT_VERSION=1.8.4
 OCAML_BOOTSTRAP_VERSION=4.00.1
 
 OPAM_VERSION=1.0.0
+OCAML_OPAM_VERSION=4.00.1+annot
 
 if [ ! -b $INSTALL_DEVICE ]
 then
@@ -74,6 +75,7 @@ else
     opam init --no-setup
     eval `opam config env`
     opam remote add xapi-project git://github.com/xapi-project/opam-repo-dev
+    opam switch $OCAML_OPAM_VERSION
 
     # Set up paths.
     grep -q $BIN_DIR $HOME/.bashrc || (echo >> $HOME/.bashrc && echo "export PATH=$BIN_DIR:\$PATH" >> $HOME/.bashrc)
