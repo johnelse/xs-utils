@@ -21,6 +21,7 @@ OCAML_OPAM_VERSION=4.00.1+annot
 if [ ! -b $INSTALL_DEVICE ]
 then
     echo "$INSTALL_DEVICE does not exist"
+    exit 1
 else
     # Install packages.
     $YUM_INSTALL vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386
