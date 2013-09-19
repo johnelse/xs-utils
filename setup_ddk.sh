@@ -10,6 +10,7 @@ SRC_DIR=$MOUNT_POINT/src
 
 TMUX_VERSION=1.6
 GIT_VERSION=1.8.4
+OCAML_BOOTSTRAP_VERSION=4.00.1
 
 if [ ! -b $INSTALL_DEVICE ]
 then
@@ -48,6 +49,15 @@ else
     make configure
     ./configure --prefix=$MOUNT_POINT
     make all install
+
+    # Set up OCaml.
+    # This is the initial install needed to build OPAM.
+    cd $SRC_DIR
+    wget http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
+    tar zxf ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
+    cd ocaml-${OCAML_BOOTSTRAP_VERSION}
+    ./configure --prefix $MOUNT_POINT
+    make world opt opt.opt
 
     # Set up paths.
     # echo "export PATH=/usr/local2/bin:$PATH" >> ~/.bashrc
