@@ -75,9 +75,9 @@ git checkout $OPAM_VERSION
 make
 make install
 opam init --no-setup
-eval `opam config env`
 opam remote add xapi-project git://github.com/xapi-project/opam-repo-dev
 opam switch $OCAML_OPAM_VERSION
+eval `opam config env`
 
 # Set up paths.
 grep -q $BIN_DIR $HOME/.bashrc || (echo >> $HOME/.bashrc && echo "export PATH=$BIN_DIR:\$PATH" >> $HOME/.bashrc)
