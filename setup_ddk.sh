@@ -63,7 +63,7 @@ else
 
     # Set up OPAM.
     PATH=$BIN_DIR:$PATH
-    ln -s $OPAM_DIR $HOME/.opam
+    ln -sf $OPAM_DIR $HOME/.opam
     cd $PULLS_DIR
     git clone git://github.com/OCamlPro/opam
     cd opam
