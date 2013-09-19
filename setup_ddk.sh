@@ -17,10 +17,7 @@ then
     echo "$INSTALL_DEVICE does not exist"
 else
     # Install packages.
-    $YUM_INSTALL vim-enhanced.i386
-    $YUM_INSTALL libevent-devel.i386
-    $YUM_INSTALL autoconf.noarch
-    $YUM_INSTALL gettext-devel.i386
+    $YUM_INSTALL vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386
 
     # Setup new disk.
     mountpoint -q $MOUNT_POINT && umount $MOUNT_POINT
