@@ -12,6 +12,7 @@ OPAM_DIR=$MOUNT_POINT/.opam
 TMUX_VERSION=1.6
 GIT_VERSION=1.8.4
 OCAML_BOOTSTRAP_VERSION=4.00.1
+OCAML_BOOTSTRAP_SHORT_VERSION=`echo $OCAML_BOOTSTRAP_VERSION | cut -d "." -f 1,2`
 
 OPAM_VERSION=1.0.0
 OCAML_OPAM_VERSION=4.01.0
@@ -58,7 +59,7 @@ make all install
 # Set up OCaml.
 # This is the initial install needed to build OPAM.
 cd $SRC_DIR
-wget http://caml.inria.fr/pub/distrib/ocaml-4.00/ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
+wget http://caml.inria.fr/pub/distrib/ocaml-${OCAML_BOOTSTRAP_SHORT_VERSION}/ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
 tar zxf ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
 cd ocaml-${OCAML_BOOTSTRAP_VERSION}
 ./configure --prefix $MOUNT_POINT
