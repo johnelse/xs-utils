@@ -76,6 +76,5 @@ else
     opam remote add xapi-project git://github.com/xapi-project/opam-repo-dev
 
     # Set up paths.
-    # echo >> $HOME/.bashrc
-    # echo 'export PATH=/usr/local2/bin:$PATH' >> $HOME/.bashrc
+    grep -q $BIN_DIR $HOME/.bashrc || (echo >> $HOME/.bashrc && echo "export PATH=$BIN_DIR:\$PATH" >> $HOME/.bashrc)
 fi
