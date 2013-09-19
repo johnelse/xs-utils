@@ -71,6 +71,9 @@ else
     ./configure --prefix=${MOUNT_POINT}
     make
     make install
+    opam init --no-setup
+    eval `opam config env`
+    opam remote add xapi-project git://github.com/xapi-project/opam-repo-dev
 
     # Set up paths.
     # echo >> $HOME/.bashrc
