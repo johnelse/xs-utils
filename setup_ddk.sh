@@ -32,7 +32,7 @@ else
     grep -q $INSTALL_DEVICE /etc/fstab || echo "$INSTALL_DEVICE	$MOUNT_POINT	ext3	defaults	1  1" >> /etc/fstab
 
     # Set up source directory.
-    mkdir -p $SRC_DIR
+    mkdir -p $SRC_DIR $OPAM_DIR
 
     # Set up tmux.
     cd $SRC_DIR
@@ -63,7 +63,7 @@ else
 
     # Set up OPAM.
     PATH=$BIN_DIR:$PATH
-    ln -s $OPAM_DIR ~/.opam
+    ln -s $OPAM_DIR $HOME/.opam
     cd $PULLS_DIR
     git clone git://github.com/OCamlPro/opam
     cd opam
