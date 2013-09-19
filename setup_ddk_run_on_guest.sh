@@ -29,69 +29,91 @@ set -x
 # Install packages.
 $YUM_INSTALL vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386
 
-# Setup new disk.
-mountpoint -q $MOUNT_POINT && umount $MOUNT_POINT
-mkfs.ext3 /dev/xvdc
-mkdir -p $MOUNT_POINT
-mount $INSTALL_DEVICE $MOUNT_POINT
-grep -q $INSTALL_DEVICE /etc/fstab || echo "$INSTALL_DEVICE	$MOUNT_POINT	ext3	defaults	1  1" >> /etc/fstab
+if ! mountpoint -q $MOUNT_POINT
+then
+    # Setup new disk.
+    mkfs.ext3 /dev/xvdc
+    mkdir -p $MOUNT_POINT
+    mount $INSTALL_DEVICE $MOUNT_POINT
+    grep -q $INSTALL_DEVICE /etc/fstab || echo "$INSTALL_DEVICE	$MOUNT_POINT	ext3	defaults	1  1" >> /etc/fstab
+fi
 
 # Set up source directory.
 mkdir -p $SRC_DIR $PULLS_DIR $OPAM_DIR
 
 # Set up tmux.
-cd $SRC_DIR
-wget "http://downloads.sourceforge.net/project/tmux/tmux/tmux-${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz?r=&ts=1379585437&use_mirror=garr"
-tar zxf tmux-${TMUX_VERSION}.tar.gz
-cd tmux-${TMUX_VERSION}
-./configure --prefix=$MOUNT_POINT
-make
-make install
+if ! which tmux 2> /dev/null
+then
+    cd $SRC_DIR
+    rm -rf tmux-*
+    wget "http://downloads.sourceforge.net/project/tmux/tmux/tmux-${TMUX_VERSION}/tmux-${TMUX_VERSION}.tar.gz?r=&ts=1379585437&use_mirror=garr"
+    tar zxf tmux-${TMUX_VERSION}.tar.gz
+    cd tmux-${TMUX_VERSION}
+    ./configure --prefix=$MOUNT_POINT
+    make
+    make install
+fi
 
 # Set up git
-cd $SRC_DIR
-wget https://github.com/git/git/archive/v${GIT_VERSION}.tar.gz -O git-${GIT_VERSION}.tar.gz
-tar zxf git-${GIT_VERSION}.tar.gz
-cd git-${GIT_VERSION}
-make configure
-./configure --prefix=$MOUNT_POINT
-make all install
-# Install git bash completion.
-cp contrib/completion/git-completion.bash /etc/bash_completion.d/git
+if ! which git 2> /dev/null
+then
+    cd $SRC_DIR
+    rm -rf git-*
+    wget https://github.com/git/git/archive/v${GIT_VERSION}.tar.gz -O git-${GIT_VERSION}.tar.gz
+    tar zxf git-${GIT_VERSION}.tar.gz
+    cd git-${GIT_VERSION}
+    make configure
+    ./configure --prefix=$MOUNT_POINT
+    make all install
+    # Install git bash completion.
+    cp contrib/completion/git-completion.bash /etc/bash_completion.d/git
+fi
 
-# Set up OCaml.
-# This is the initial install needed to build OPAM.
-cd $SRC_DIR
-wget http://caml.inria.fr/pub/distrib/ocaml-${OCAML_BOOTSTRAP_SHORT_VERSION}/ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
-tar zxf ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
-cd ocaml-${OCAML_BOOTSTRAP_VERSION}
-./configure --prefix $MOUNT_POINT
-make world opt opt.opt install
+if [ ! -e $BIN_DIR/ocaml ]
+then
+    # Set up OCaml.
+    # This is the initial install needed to build OPAM.
+    cd $SRC_DIR
+    rm -rf ocaml-*
+    wget http://caml.inria.fr/pub/distrib/ocaml-${OCAML_BOOTSTRAP_SHORT_VERSION}/ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
+    tar zxf ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
+    cd ocaml-${OCAML_BOOTSTRAP_VERSION}
+    ./configure --prefix $MOUNT_POINT
+    make world opt opt.opt install
+fi
 
-# Set up tig.
-cd $PULLS_DIR
-git clone git://github.com/jonas/tig
-cd tig
-git checkout tig-${TIG_VERSION}
-# tig-1.1 doesn't support --prefix, and tig-1.2 doesn't build against old libc.
-# This puts tig into /root/bin, which is OK.
-make
-make install
+if ! which tig 2> /dev/null
+then
+    # Set up tig.
+    cd $PULLS_DIR
+    rm -rf tig
+    git clone git://github.com/jonas/tig
+    cd tig
+    git checkout tig-${TIG_VERSION}
+    # tig-1.1 doesn't support --prefix, and tig-1.2 doesn't build against old libc.
+    # This puts tig into /root/bin, which is OK.
+    make
+    make install
+fi
 
-# Set up OPAM.
-PATH=$BIN_DIR:$PATH
-ln -sf $OPAM_DIR $HOME/.opam
-cd $PULLS_DIR
-git clone git://github.com/OCamlPro/opam
-cd opam
-git checkout $OPAM_VERSION
-./configure --prefix=${MOUNT_POINT}
-make
-make install
-opam init --no-setup
-opam remote add xapi-project git://github.com/xapi-project/opam-repo-dev
-opam switch $OCAML_OPAM_VERSION
-eval `opam config env`
+if ! which opam 2> /dev/null
+then
+    # Set up OPAM.
+    PATH=$BIN_DIR:$PATH
+    ln -sf $OPAM_DIR $HOME/.opam
+    cd $PULLS_DIR
+    rm -rf opam
+    git clone git://github.com/OCamlPro/opam
+    cd opam
+    git checkout $OPAM_VERSION
+    ./configure --prefix=${MOUNT_POINT}
+    make
+    make install
+    opam init --no-setup
+    opam remote add xapi-project git://github.com/xapi-project/opam-repo-dev
+    opam switch $OCAML_OPAM_VERSION
+    eval `opam config env`
+fi
 
 # Set up .bashrc
 grep -q $BIN_DIR $HOME/.bashrc || (echo >> $HOME/.bashrc && echo "export PATH=$BIN_DIR:\$PATH" >> $HOME/.bashrc)
