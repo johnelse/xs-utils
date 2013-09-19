@@ -39,7 +39,9 @@ then
 fi
 
 # Set up source directory.
-mkdir -p $SRC_DIR $PULLS_DIR $OPAM_DIR
+mkdir -p $SRC_DIR $PULLS_DIR $OPAM_DIR $BIN_DIR
+
+PATH=$BIN_DIR:$PATH
 
 # Set up tmux.
 if ! which tmux 2> /dev/null
@@ -99,7 +101,6 @@ fi
 if ! which opam 2> /dev/null
 then
     # Set up OPAM.
-    PATH=$BIN_DIR:$PATH
     ln -sf $OPAM_DIR $HOME/.opam
     cd $PULLS_DIR
     rm -rf opam
