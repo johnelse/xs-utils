@@ -24,3 +24,5 @@ xe vm-memory-limits-set uuid=${VM} dynamic-min=2147483648 dynamic-max=2147483648
 xe vm-param-set uuid=${VM} VCPUs-max=4 VCPUs-at-startup=4 name-label=${NAME_LABEL}
 VDI=`xe vdi-create type=user sr-uuid=${SR_UUID} name-label="DDK data VDI" virtual-size=21474836480`
 xe vbd-create vm-uuid=${VM} vdi-uuid=${VDI} device=2 type=Disk mode=RW
+NETWORK=`xe network-list bridge=xenbr0 --minimal`
+xe vif-create vm-uuid=${VM} network-uuid=${NETWORK} device=0
