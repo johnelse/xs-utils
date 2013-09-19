@@ -7,10 +7,15 @@ YUM_INSTALL="yum install --disablerepo=citrix --enablerepo=base,updates -y"
 INSTALL_DEVICE=/dev/xvdc
 MOUNT_POINT=/usr/local2
 SRC_DIR=$MOUNT_POINT/src
+PULLS_DIR=$MOUNT_POINT/pulls
+BIN_DIR=$MOUNT_POINT/bin
+OPAM_DIR=$MOUNT_POINT/.opam
 
 TMUX_VERSION=1.6
 GIT_VERSION=1.8.4
 OCAML_BOOTSTRAP_VERSION=4.00.1
+
+OPAM_VERSION=1.0.0
 
 if [ ! -b $INSTALL_DEVICE ]
 then
@@ -55,6 +60,17 @@ else
     cd ocaml-${OCAML_BOOTSTRAP_VERSION}
     ./configure --prefix $MOUNT_POINT
     make world opt opt.opt
+
+    # Set up OPAM.
+    PATH=$BIN_DIR:$PATH
+    ln -s $OPAM_DIR ~/.opam
+    cd $PULLS_DIR
+    git clone git://github.com/OCamlPro/opam
+    cd opam
+    git checkout $OPAM_VERSION
+    ./configure --prefix=${MOUNT_POINT}
+    make
+    make install
 
     # Set up paths.
     # echo >> $HOME/.bashrc
