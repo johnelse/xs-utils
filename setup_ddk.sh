@@ -59,7 +59,7 @@ else
     tar zxf ocaml-${OCAML_BOOTSTRAP_VERSION}.tar.gz
     cd ocaml-${OCAML_BOOTSTRAP_VERSION}
     ./configure --prefix $MOUNT_POINT
-    make world opt opt.opt
+    make world opt opt.opt install
 
     # Set up OPAM.
     PATH=$BIN_DIR:$PATH
