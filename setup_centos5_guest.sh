@@ -18,7 +18,7 @@ OCAML_OPAM_VERSION=4.01.0
 set -x
 
 # Install packages.
-yum install -y vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386 xen-devel.i386 xen-libs.i386
+yum install -y bash-completion.noarch vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386 xen-devel.i386 xen-libs.i386
 
 # Create useful directories.
 mkdir -p $OPAM_DIR $PULLS_DIR
