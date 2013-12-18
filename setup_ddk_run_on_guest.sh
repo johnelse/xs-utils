@@ -104,7 +104,7 @@ then
     ln -sf $OPAM_DIR $HOME/.opam
     cd $PULLS_DIR
     rm -rf opam
-    git clone git://github.com/OCamlPro/opam
+    git clone git://github.com/ocaml/opam
     cd opam
     git checkout $OPAM_VERSION
     ./configure --prefix=${MOUNT_POINT}
