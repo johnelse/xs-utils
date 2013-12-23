@@ -27,7 +27,7 @@ fi
 set -x
 
 # Install packages.
-$YUM_INSTALL vim-enhanced.i386 libevent-devel.i386 autoconf.noarch gettext-devel.i386
+$YUM_INSTALL vim-enhanced.i686 libevent-devel.i686 autoconf.noarch gettext-devel.i686
 
 # Setup new disk.
 if ! mountpoint -q $MOUNT_POINT
